@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name="Tasks")
@@ -22,13 +23,13 @@ public class Task {
 
     private Long taskId;
     private Long userId;
-    private String taskTitle;
-    private String taskDetails;
-    private TaskStatus taskStatus;
-    private TaskImportance taskImportance;
-    private Instant taskCreatedAt;
-    private LocalDateTime taskLastModifiedAt;
-    private LocalDateTime taskDeadline;
+    private String title;
+    private String details;
+    private TaskStatus status;
+    private TaskImportance importance;
+    private Instant createdAt;
+    private LocalDate modifiedAt;
+    private LocalDate deadline;
 
 
 }
