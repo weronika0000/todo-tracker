@@ -2,6 +2,7 @@ package com.softwaremind.todotracker.boundary.controller;
 
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.service.TaskServiceImpl;
+import com.softwaremind.todotracker.entity.TaskStatus;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -59,6 +60,18 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(allTasks);
     }
 
+    //                              filters
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByDeadline(@PathVariable TaskStatus status) {
+        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByDeadline(status);
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+    }
+
+    @GetMapping("/status/{status}/importance")
+    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(@PathVariable TaskStatus status) {
+        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByImportance(status);
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+    }
 
 }
