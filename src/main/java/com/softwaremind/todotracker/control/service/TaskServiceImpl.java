@@ -1,8 +1,6 @@
 package com.softwaremind.todotracker.control.service;
 
-import com.softwaremind.todotracker.boundary.dto.AddTaskRequestDto;
-import com.softwaremind.todotracker.boundary.dto.AddTaskResponseDto;
-import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
+import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
 import org.springframework.stereotype.Service;
@@ -45,8 +43,24 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto updateTask(Long taskId, AddTaskRequestDto taskDto) {
-        return null;
+    public ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto) {
+
+        Task taskFromDatabase = taskRepository
+                .findById(taskId)
+                .orElseThrow(() ->
+                        new RuntimeException("The task does not exist"));
+        if (!taskDto.userId().equals(taskFromDatabase.getUserId())) {
+            throw new RuntimeException("Access Denied: This user does not have appropriate authorization");
+        }
+        taskFromDatabase.setTitle(taskDto.title());
+        taskFromDatabase.setDetails(taskDto.details());
+        taskFromDatabase.setStatus(taskDto.status());
+        taskFromDatabase.setImportance(taskDto.importance());
+        taskFromDatabase.setDeadline(taskDto.deadline());
+        taskFromDatabase.setModifiedAt(Instant.now());
+        Task responseTask = taskRepository.save(taskFromDatabase);
+
+        return mapTasktoModifyTaskResponseDto(responseTask);
     }
 
     @Override

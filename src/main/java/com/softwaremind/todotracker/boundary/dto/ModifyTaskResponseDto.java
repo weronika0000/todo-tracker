@@ -5,9 +5,9 @@ import com.softwaremind.todotracker.entity.TaskStatus;
 import lombok.Builder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Builder
-public record AddTaskResponseDto(
+public record ModifyTaskResponseDto(
 
         Long taskId,
         Long userId,

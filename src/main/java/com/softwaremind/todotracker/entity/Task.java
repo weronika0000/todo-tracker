@@ -30,6 +30,6 @@ public class Task {
     private LocalDate deadline;
 
     private Instant createdAt;
-    private LocalDate modifiedAt;
+    private Instant modifiedAt;
 
 }

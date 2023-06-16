@@ -16,7 +16,7 @@ public record TaskResponseDto(
         TaskImportance importance,
         LocalDate deadline,
         Instant createdAt,
-        LocalDate modifiedAt
+        Instant modifiedAt
 
 ) {
 }
