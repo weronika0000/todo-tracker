@@ -3,6 +3,7 @@ package com.softwaremind.todotracker.control.service;
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
+import com.softwaremind.todotracker.entity.TaskStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -81,7 +82,35 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskId);
 
 
+        }
 
+    @Override
+    public List<TaskResponseDto> getTasksByStatusSortedByDeadline(TaskStatus status) {
+        List<Task> tasks = taskRepository.findByStatusOrderByDeadlineAsc(status);
 
+        if (tasks.isEmpty()) {
+            throw new RuntimeException("No tasks found for the given status");
+        }
+        return mapTaskListToTaskResponseDtoList(tasks);
+    };
+
+    @Override
+    public List<TaskResponseDto> getTasksByStatusSortedByImportance(TaskStatus status) {
+        List<Task> tasks = taskRepository.findByStatusOrderByImportanceDesc(status);
+        if (tasks.isEmpty()) {
+            throw new RuntimeException("No tasks found for the given status");
+        }
+        return mapTaskListToTaskResponseDtoList(tasks);
     }
+
+
 }
+
+
+
+
+
+
+
+
+
