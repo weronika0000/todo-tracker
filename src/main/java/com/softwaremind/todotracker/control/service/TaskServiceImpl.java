@@ -3,7 +3,6 @@ package com.softwaremind.todotracker.control.service;
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -39,9 +38,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDto> getAllBooks() {
-        return null;
+    public List<TaskResponseDto> getAllTasks(){
+    List<Task> tasks = taskRepository.findAll();
+
+    if (tasks.isEmpty()) {
+        throw new RuntimeException("No tasks found");
+
     }
+        return mapTaskListToTaskResponseDtoList(tasks);
+    }
+
+
+
 
     @Override
     public ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto) {

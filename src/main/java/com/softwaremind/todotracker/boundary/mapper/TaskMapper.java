@@ -6,6 +6,9 @@ import com.softwaremind.todotracker.boundary.dto.ModifyTaskResponseDto;
 import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
 import com.softwaremind.todotracker.entity.Task;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TaskMapper {
 
     public static Task mapAddTaskRequestDtotoTask(AddTaskRequestDto taskDto){
@@ -56,6 +59,13 @@ public class TaskMapper {
                 .build();
 
     }
+
+    public static List<TaskResponseDto> mapTaskListToTaskResponseDtoList(List<Task> listOfTasks) {
+        return listOfTasks.stream()
+                .map(TaskMapper::mapTasktoTaskResponseDto)
+                .collect(Collectors.toList());
+    }
+
 
 
 }

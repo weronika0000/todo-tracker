@@ -10,7 +10,7 @@ public interface TaskService {
 
     TaskResponseDto getById(Long taskId);
 
-    List<TaskResponseDto> getAllBooks();
+    List<TaskResponseDto> getAllTasks();
 
     ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto);
 

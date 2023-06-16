@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,30 +53,12 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-
-    //messages
-
-
-    @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult().getAllErrors().stream()
-                .collect(toMap(
-                        err -> ((FieldError) err).getField(),
-                        err -> Optional.ofNullable(err.getDefaultMessage()).orElse("field error"),
-                        (msg1, msg2) -> Objects.equals(msg1, msg2) ? msg1 : msg1 + ", " + msg2
-                ));
+    @GetMapping("/list")
+    public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
+        List<TaskResponseDto> allTasks = taskService.getAllTasks();
+        return ResponseEntity.status(HttpStatus.OK).body(allTasks);
     }
 
-    @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    Map<String, String> handleValidationExceptions(ConstraintViolationException ex) {
-        return ex.getConstraintViolations().stream()
-                .collect(toMap(
-                        err -> err.getPropertyPath().toString(),
-                        ConstraintViolation::getMessage
-                ));
-    }
 
 
 }
