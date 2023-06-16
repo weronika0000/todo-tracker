@@ -2,6 +2,7 @@ package com.softwaremind.todotracker.boundary.mapper;
 
 import com.softwaremind.todotracker.boundary.dto.AddTaskRequestDto;
 import com.softwaremind.todotracker.boundary.dto.AddTaskResponseDto;
+import com.softwaremind.todotracker.boundary.dto.ModifyTaskResponseDto;
 import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
 import com.softwaremind.todotracker.entity.Task;
 
@@ -22,6 +23,7 @@ public class TaskMapper {
     public static AddTaskResponseDto mapTasktoAddTaskResponseDto(Task task){
         return AddTaskResponseDto.builder()
                 .taskId(task.getTaskId())
+                .userId(task.getUserId())
                 .title(task.getTitle())
                 .details(task.getDetails())
                 .status(task.getStatus())
@@ -34,6 +36,7 @@ public class TaskMapper {
     public static TaskResponseDto mapTasktoTaskResponseDto(Task task){
         return TaskResponseDto.builder()
                 .taskId(task.getTaskId())
+                .userId(task.getUserId())
                 .title(task.getTitle())
                 .details(task.getDetails())
                 .status(task.getStatus())
@@ -44,4 +47,19 @@ public class TaskMapper {
                 .build();
 
     }
+
+    public static ModifyTaskResponseDto mapTasktoModifyTaskResponseDto(Task task){
+        return ModifyTaskResponseDto.builder()
+                .taskId(task.getTaskId())
+                .userId(task.getUserId())
+                .title(task.getTitle())
+                .details(task.getDetails())
+                .status(task.getStatus())
+                .importance(task.getImportance())
+                .deadline(task.getDeadline())
+                .build();
+
+    }
+
+
 }

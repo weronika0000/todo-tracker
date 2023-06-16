@@ -1,8 +1,6 @@
 package com.softwaremind.todotracker.control.service;
 
-import com.softwaremind.todotracker.boundary.dto.AddTaskRequestDto;
-import com.softwaremind.todotracker.boundary.dto.AddTaskResponseDto;
-import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
+import com.softwaremind.todotracker.boundary.dto.*;
 
 import java.util.List;
 
@@ -14,7 +12,7 @@ public interface TaskService {
 
     List<TaskResponseDto> getAllBooks();
 
-    TaskResponseDto updateTask(Long taskId, AddTaskRequestDto taskDto);
+    ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto);
 
     void deleteTask(Long taskId);
 }
