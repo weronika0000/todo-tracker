@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 
 public record AddTaskRequestDto(
 
-        @Min(1)
-        Long userId,
         @NotBlank(message = "Title cannot be empty")
         String title,
         @NotBlank(message = "Title cannot be empty")

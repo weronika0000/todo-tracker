@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public record AddTaskResponseDto(
 
         Long taskId,
-        Long userId,
+
         String title,
         String details,
         TaskStatus status,

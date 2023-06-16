@@ -10,7 +10,6 @@ import java.time.LocalDate;
 public record ModifyTaskResponseDto(
 
         Long taskId,
-        Long userId,
         String title,
         String details,
         TaskStatus status,

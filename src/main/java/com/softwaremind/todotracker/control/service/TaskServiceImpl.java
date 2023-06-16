@@ -3,6 +3,7 @@ package com.softwaremind.todotracker.control.service;
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -49,9 +50,7 @@ public class TaskServiceImpl implements TaskService {
                 .findById(taskId)
                 .orElseThrow(() ->
                         new RuntimeException("The task does not exist"));
-        if (!taskDto.userId().equals(taskFromDatabase.getUserId())) {
-            throw new RuntimeException("Access Denied: This user does not have appropriate authorization");
-        }
+
         taskFromDatabase.setTitle(taskDto.title());
         taskFromDatabase.setDetails(taskDto.details());
         taskFromDatabase.setStatus(taskDto.status());
@@ -65,6 +64,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(Long taskId) {
+
+        Task taskFromDatabase = taskRepository
+                .findById(taskId)
+                .orElseThrow(() ->
+                        new RuntimeException("The task does not exist"));
+
+        taskRepository.deleteById(taskId);
+
+
+
 
     }
 }

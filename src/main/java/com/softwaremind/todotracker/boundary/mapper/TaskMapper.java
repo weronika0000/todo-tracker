@@ -10,7 +10,6 @@ public class TaskMapper {
 
     public static Task mapAddTaskRequestDtotoTask(AddTaskRequestDto taskDto){
         return Task.builder()
-                .userId(taskDto.userId())
                 .title(taskDto.title())
                 .details(taskDto.details())
                 .status(taskDto.status())
@@ -23,7 +22,6 @@ public class TaskMapper {
     public static AddTaskResponseDto mapTasktoAddTaskResponseDto(Task task){
         return AddTaskResponseDto.builder()
                 .taskId(task.getTaskId())
-                .userId(task.getUserId())
                 .title(task.getTitle())
                 .details(task.getDetails())
                 .status(task.getStatus())
@@ -36,7 +34,6 @@ public class TaskMapper {
     public static TaskResponseDto mapTasktoTaskResponseDto(Task task){
         return TaskResponseDto.builder()
                 .taskId(task.getTaskId())
-                .userId(task.getUserId())
                 .title(task.getTitle())
                 .details(task.getDetails())
                 .status(task.getStatus())
@@ -51,7 +48,6 @@ public class TaskMapper {
     public static ModifyTaskResponseDto mapTasktoModifyTaskResponseDto(Task task){
         return ModifyTaskResponseDto.builder()
                 .taskId(task.getTaskId())
-                .userId(task.getUserId())
                 .title(task.getTitle())
                 .details(task.getDetails())
                 .status(task.getStatus())
