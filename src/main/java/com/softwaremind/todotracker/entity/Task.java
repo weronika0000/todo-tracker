@@ -27,9 +27,9 @@ public class Task {
     private String details;
     private TaskStatus status;
     private TaskImportance importance;
-    private Instant createdAt;
-    private LocalDate modifiedAt;
     private LocalDate deadline;
 
+    private Instant createdAt;
+    private LocalDate modifiedAt;
 
 }
