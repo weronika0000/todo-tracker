@@ -22,7 +22,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long taskId;
-    private Long userId;
+    //private Long userId;
     private String title;
     private String details;
     private TaskStatus status;

@@ -11,8 +11,7 @@ import java.time.LocalDate;
 
 public record ModifyTaskRequestDto(
 
-        @Min(1)
-        Long userId,
+
         @NotBlank(message = "Title cannot be empty")
         String title,
         @NotBlank(message = "Title cannot be empty")

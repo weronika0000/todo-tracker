@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Builder
 public record TaskResponseDto(
         Long taskId,
-        Long userId,
+
         String title,
         String details,
         TaskStatus status,
