@@ -54,7 +54,7 @@ public class TaskController {
         String body = "The task was deleted";
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
-
+//
     @GetMapping("/list")
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         List<TaskResponseDto> allTasks = taskService.getAllTasks();
@@ -66,7 +66,7 @@ public class TaskController {
     @GetMapping("/status/{status}/bydeadline")
     public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByDeadline(
             @PathVariable("status") TaskStatus status,
-            @RequestParam("sortDirection") Sort.Direction sortDirection)
+            @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") Sort.Direction sortDirection)
      {
 
         List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByDeadline(status, sortDirection);
@@ -76,7 +76,7 @@ public class TaskController {
     @GetMapping("/status/{status}/byimportance")
     public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(
             @PathVariable TaskStatus status,
-            @RequestParam("sortDirection") Sort.Direction sortDirection) {
+            @RequestParam(value = "sortDirection", required = false, defaultValue = "DESC") Sort.Direction sortDirection) {
 
         List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByImportance(status, sortDirection);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);

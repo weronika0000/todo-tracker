@@ -91,9 +91,7 @@ public class TaskServiceImpl implements TaskService {
         } else {
             tasks = taskRepository.findByStatusOrderByDeadlineDesc(status);
         }
-        if (tasks.isEmpty()) {
-            throw new RuntimeException("No tasks found for the given status");
-        }
+
         return mapTaskListToTaskResponseDtoList(tasks);
     }
 
@@ -109,9 +107,7 @@ public class TaskServiceImpl implements TaskService {
 
         }
 
-        if (tasks.isEmpty()) {
-            throw new RuntimeException("No tasks found for the given status");
-        }
+
         return mapTaskListToTaskResponseDtoList(tasks);
     }
 
