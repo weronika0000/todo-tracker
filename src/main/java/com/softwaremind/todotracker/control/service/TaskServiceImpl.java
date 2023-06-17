@@ -4,6 +4,7 @@ import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
 import com.softwaremind.todotracker.entity.TaskStatus;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -39,17 +40,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDto> getAllTasks(){
-    List<Task> tasks = taskRepository.findAll();
+    public List<TaskResponseDto> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
 
-    if (tasks.isEmpty()) {
-        throw new RuntimeException("No tasks found");
+        if (tasks.isEmpty()) {
+            throw new RuntimeException("No tasks found");
 
-    }
+        }
         return mapTaskListToTaskResponseDtoList(tasks);
     }
-
-
 
 
     @Override
@@ -82,21 +81,34 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskId);
 
 
-        }
+    }
 
     @Override
-    public List<TaskResponseDto> getTasksByStatusSortedByDeadline(TaskStatus status) {
-        List<Task> tasks = taskRepository.findByStatusOrderByDeadlineAsc(status);
-
+    public List<TaskResponseDto> getTasksByStatusSortedByDeadline(TaskStatus status, Sort.Direction sortDirection) {
+        List<Task> tasks;
+        if (sortDirection == Sort.Direction.ASC) {
+            tasks = taskRepository.findByStatusOrderByDeadlineAsc(status);
+        } else {
+            tasks = taskRepository.findByStatusOrderByDeadlineDesc(status);
+        }
         if (tasks.isEmpty()) {
             throw new RuntimeException("No tasks found for the given status");
         }
         return mapTaskListToTaskResponseDtoList(tasks);
-    };
+    }
+
+    ;
 
     @Override
-    public List<TaskResponseDto> getTasksByStatusSortedByImportance(TaskStatus status) {
-        List<Task> tasks = taskRepository.findByStatusOrderByImportanceDesc(status);
+    public List<TaskResponseDto> getTasksByStatusSortedByImportance(TaskStatus status, Sort.Direction sortDirection) {
+        List<Task> tasks;
+        if(sortDirection == Sort.Direction.ASC) {
+            tasks = taskRepository.findByStatusOrderByImportanceAsc(status);
+        } else {
+            tasks = taskRepository.findByStatusOrderByImportanceDesc(status);
+
+        }
+
         if (tasks.isEmpty()) {
             throw new RuntimeException("No tasks found for the given status");
         }

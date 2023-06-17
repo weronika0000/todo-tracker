@@ -6,6 +6,7 @@ import com.softwaremind.todotracker.entity.TaskStatus;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -62,16 +63,27 @@ public class TaskController {
 
     //                              filters
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByDeadline(@PathVariable TaskStatus status) {
-        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByDeadline(status);
+    @GetMapping("/status/{status}/bydeadline")
+    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByDeadline(
+            @PathVariable("status") TaskStatus status,
+            @RequestParam("sortDirection") Sort.Direction sortDirection)
+     {
+
+        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByDeadline(status, sortDirection);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
 
-    @GetMapping("/status/{status}/importance")
-    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(@PathVariable TaskStatus status) {
-        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByImportance(status);
+    @GetMapping("/status/{status}/byimportance")
+    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(
+            @PathVariable TaskStatus status,
+            @RequestParam("sortDirection") Sort.Direction sortDirection) {
+
+        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByImportance(status, sortDirection);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
+
+
+
+
 
 }
