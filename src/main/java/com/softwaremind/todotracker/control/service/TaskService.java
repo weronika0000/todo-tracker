@@ -1,6 +1,8 @@
 package com.softwaremind.todotracker.control.service;
 
 import com.softwaremind.todotracker.boundary.dto.*;
+import com.softwaremind.todotracker.entity.Task;
+import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
 import org.springframework.data.domain.Sort;
 
@@ -18,8 +20,11 @@ public interface TaskService {
 
     void deleteTask(Long taskId);
 
-
     List<TaskResponseDto> getTasksByStatusSortedByDeadline(TaskStatus status, Sort.Direction sortDirection);
 
     List<TaskResponseDto> getTasksByStatusSortedByImportance(TaskStatus status, Sort.Direction sortDirection);
+
+    List<TaskResponseDto> getTasksByImportanceOrderByDeadline(TaskImportance importance, Sort.Direction sortDirection);
+
+
 }
