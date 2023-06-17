@@ -54,7 +54,7 @@ public class TaskController {
         String body = "The task was deleted";
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
-
+//
     @GetMapping("/list")
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         List<TaskResponseDto> allTasks = taskService.getAllTasks();
