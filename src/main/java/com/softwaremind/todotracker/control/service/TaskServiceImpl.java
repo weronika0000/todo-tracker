@@ -123,6 +123,24 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Override
+    public List<TaskResponseDto> getAllTasksSortedByImportance(Sort.Direction sortDirection) {
+        List<Task> tasks = sortDirection == Sort.Direction.ASC ?
+                taskRepository.findAllByOrderByImportanceAsc() :
+                taskRepository.findAllByOrderByImportanceDesc();
+
+        return mapTaskListToTaskResponseDtoList(tasks);
+    }
+
+    @Override
+    public List<TaskResponseDto> getAllTasksSortedByDeadline(Sort.Direction sortDirection) {
+
+        List<Task> tasks = sortDirection == Sort.Direction.ASC ?
+                taskRepository.findAllByOrderByDeadlineAsc() :
+                taskRepository.findAllByOrderByDeadlineDesc();
+        return mapTaskListToTaskResponseDtoList(tasks);
+    }
+
 
 }
 

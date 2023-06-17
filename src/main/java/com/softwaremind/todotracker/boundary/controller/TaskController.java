@@ -93,6 +93,20 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
 
+    @GetMapping("/byimportance")
+    public ResponseEntity<List<TaskResponseDto>> getAllTasksSortedByImportance(
+            @RequestParam(defaultValue = "desc") String sortDirection) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        List<TaskResponseDto> responseDtoList = taskService.getAllTasksSortedByImportance(direction);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
+    }
 
+    @GetMapping("/bydeadline")
+    public ResponseEntity<List<TaskResponseDto>> getAllTasksSortedByDeadline(
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        List<TaskResponseDto> responseDtoList = taskService.getAllTasksSortedByDeadline(direction);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
+    }
 
 }
