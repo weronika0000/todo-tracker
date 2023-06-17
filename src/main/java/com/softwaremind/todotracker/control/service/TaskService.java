@@ -26,5 +26,6 @@ public interface TaskService {
 
     List<TaskResponseDto> getTasksByImportanceOrderByDeadline(TaskImportance importance, Sort.Direction sortDirection);
 
-
+    List<TaskResponseDto> getAllTasksSortedByImportance(Sort.Direction sortDirection);
+    List<TaskResponseDto> getAllTasksSortedByDeadline(Sort.Direction sortDirection);
 }
