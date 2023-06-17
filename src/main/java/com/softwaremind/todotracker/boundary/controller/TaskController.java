@@ -2,6 +2,7 @@ package com.softwaremind.todotracker.boundary.controller;
 
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.service.TaskServiceImpl;
+import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -83,6 +84,14 @@ public class TaskController {
     }
 
 
+    @GetMapping("/importance/{importance}")
+    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(
+            @PathVariable TaskImportance importance,
+            @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") Sort.Direction sortDirection) {
+
+        List<TaskResponseDto> tasks = taskService.getTasksByImportanceOrderByDeadline(importance, sortDirection);
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+    }
 
 
 

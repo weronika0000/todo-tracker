@@ -3,6 +3,7 @@ package com.softwaremind.todotracker.control.service;
 import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
+import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -104,11 +105,22 @@ public class TaskServiceImpl implements TaskService {
             tasks = taskRepository.findByStatusOrderByImportanceAsc(status);
         } else {
             tasks = taskRepository.findByStatusOrderByImportanceDesc(status);
-
         }
 
+        return mapTaskListToTaskResponseDtoList(tasks);
+    }
+
+    @Override
+    public List<TaskResponseDto> getTasksByImportanceOrderByDeadline(TaskImportance importance, Sort.Direction sortDirection ) {
+        List<Task> tasks;
+        if(sortDirection == Sort.Direction.ASC) {
+            tasks = taskRepository.findByImportanceOrderByDeadlineAsc(importance);
+        } else {
+            tasks = taskRepository.findByImportanceOrderByDeadlineDesc(importance);
+        }
 
         return mapTaskListToTaskResponseDtoList(tasks);
+
     }
 
 
