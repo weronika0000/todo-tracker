@@ -67,5 +67,5 @@ public class TaskController {
         List<TaskResponseDto> tasks = taskService.getFilteredTasks(status, importance, sortBy, sortDirection);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
 
-}
     }
+}
