@@ -4,23 +4,15 @@ import com.softwaremind.todotracker.boundary.dto.*;
 import com.softwaremind.todotracker.control.service.TaskServiceImpl;
 import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toMap;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -55,7 +47,8 @@ public class TaskController {
         String body = "The task was deleted";
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
-//
+
+    //
     @GetMapping("/list")
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         List<TaskResponseDto> allTasks = taskService.getAllTasks();
@@ -64,49 +57,15 @@ public class TaskController {
 
     //                              filters
 
-    @GetMapping("/status/{status}/bydeadline")
-    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByDeadline(
-            @PathVariable("status") TaskStatus status,
-            @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") Sort.Direction sortDirection)
-     {
+    @GetMapping("/filtered")
+    public ResponseEntity<List<TaskResponseDto>> getFilteredTasks(
+            @RequestParam(value = "status", required = false) TaskStatus status,
+            @RequestParam(value = "importance", required = false) TaskImportance importance,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") String sortDirection) {
 
-        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByDeadline(status, sortDirection);
+        List<TaskResponseDto> tasks = taskService.getFilteredTasks(status, importance, sortBy, sortDirection);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
+
     }
-
-    @GetMapping("/status/{status}/byimportance")
-    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(
-            @PathVariable TaskStatus status,
-            @RequestParam(value = "sortDirection", required = false, defaultValue = "DESC") Sort.Direction sortDirection) {
-
-        List<TaskResponseDto> tasks = taskService.getTasksByStatusSortedByImportance(status, sortDirection);
-        return ResponseEntity.status(HttpStatus.OK).body(tasks);
-    }
-
-
-    @GetMapping("/importance/{importance}")
-    public ResponseEntity<List<TaskResponseDto>> getTasksByStatusSortedByImportance(
-            @PathVariable TaskImportance importance,
-            @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") Sort.Direction sortDirection) {
-
-        List<TaskResponseDto> tasks = taskService.getTasksByImportanceOrderByDeadline(importance, sortDirection);
-        return ResponseEntity.status(HttpStatus.OK).body(tasks);
-    }
-
-    @GetMapping("/byimportance")
-    public ResponseEntity<List<TaskResponseDto>> getAllTasksSortedByImportance(
-            @RequestParam(defaultValue = "desc") String sortDirection) {
-        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
-        List<TaskResponseDto> responseDtoList = taskService.getAllTasksSortedByImportance(direction);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
-    }
-
-    @GetMapping("/bydeadline")
-    public ResponseEntity<List<TaskResponseDto>> getAllTasksSortedByDeadline(
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
-        List<TaskResponseDto> responseDtoList = taskService.getAllTasksSortedByDeadline(direction);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDtoList);
-    }
-
 }

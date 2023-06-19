@@ -51,8 +51,8 @@ public class TaskServiceImplTests {
         AddTaskRequestDto requestDto = new AddTaskRequestDto(
                 "Sample Title",
                 "Sample Details",
-                TaskStatus.doing,
-                TaskImportance.high,
+                TaskStatus.DOING,
+                TaskImportance.HIGH,
                 LocalDate.now().plusDays(7)
         );
 
@@ -62,8 +62,8 @@ public class TaskServiceImplTests {
         savedTask.setTaskId(1L);
         savedTask.setTitle("Sample Title");
         savedTask.setDetails("Sample Details");
-        savedTask.setStatus(TaskStatus.doing);
-        savedTask.setImportance(TaskImportance.high);
+        savedTask.setStatus(TaskStatus.DOING);
+        savedTask.setImportance(TaskImportance.HIGH);
         savedTask.setDeadline(LocalDate.now().plusDays(7));
         savedTask.setCreatedAt(Instant.now());
 

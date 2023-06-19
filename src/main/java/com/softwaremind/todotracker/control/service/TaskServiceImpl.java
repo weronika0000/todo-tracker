@@ -85,64 +85,44 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDto> getTasksByStatusSortedByDeadline(TaskStatus status, Sort.Direction sortDirection) {
-        List<Task> tasks;
-        if (sortDirection == Sort.Direction.ASC) {
-            tasks = taskRepository.findByStatusOrderByDeadlineAsc(status);
+    public List<TaskResponseDto> getFilteredTasks(TaskStatus status, TaskImportance importance, String sortBy, String sortDirection) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Sort sort;
+
+        if ("importance".equalsIgnoreCase(sortBy)) {
+            sort = Sort.by(direction, "importance");
         } else {
-            tasks = taskRepository.findByStatusOrderByDeadlineDesc(status);
+            sort = Sort.by(direction, "deadline");
         }
 
-        return mapTaskListToTaskResponseDtoList(tasks);
-    }
-
-    ;
-
-    @Override
-    public List<TaskResponseDto> getTasksByStatusSortedByImportance(TaskStatus status, Sort.Direction sortDirection) {
-        List<Task> tasks;
-        if(sortDirection == Sort.Direction.ASC) {
-            tasks = taskRepository.findByStatusOrderByImportanceAsc(status);
+        if (status != null && importance != null) {
+            return mapTaskListToTaskResponseDtoList(
+                    taskRepository.findAllByStatusAndImportance(status, importance, sort));
+        } else if (status != null) {
+            return mapTaskListToTaskResponseDtoList(
+                    taskRepository.findAllByStatus(status, sort));
+        } else if (importance != null) {
+            sort = Sort.by(direction, "deadline");
+            return mapTaskListToTaskResponseDtoList(
+                    taskRepository.findAllByImportance(importance, sort));
         } else {
-            tasks = taskRepository.findByStatusOrderByImportanceDesc(status);
+            return mapTaskListToTaskResponseDtoList(
+                    taskRepository.findAll(sort));
         }
 
-        return mapTaskListToTaskResponseDtoList(tasks);
     }
-
-    @Override
-    public List<TaskResponseDto> getTasksByImportanceOrderByDeadline(TaskImportance importance, Sort.Direction sortDirection ) {
-        List<Task> tasks;
-        if(sortDirection == Sort.Direction.ASC) {
-            tasks = taskRepository.findByImportanceOrderByDeadlineAsc(importance);
-        } else {
-            tasks = taskRepository.findByImportanceOrderByDeadlineDesc(importance);
-        }
-
-        return mapTaskListToTaskResponseDtoList(tasks);
-
-    }
-
-    @Override
-    public List<TaskResponseDto> getAllTasksSortedByImportance(Sort.Direction sortDirection) {
-        List<Task> tasks = sortDirection == Sort.Direction.ASC ?
-                taskRepository.findAllByOrderByImportanceAsc() :
-                taskRepository.findAllByOrderByImportanceDesc();
-
-        return mapTaskListToTaskResponseDtoList(tasks);
-    }
-
-    @Override
-    public List<TaskResponseDto> getAllTasksSortedByDeadline(Sort.Direction sortDirection) {
-
-        List<Task> tasks = sortDirection == Sort.Direction.ASC ?
-                taskRepository.findAllByOrderByDeadlineAsc() :
-                taskRepository.findAllByOrderByDeadlineDesc();
-        return mapTaskListToTaskResponseDtoList(tasks);
-    }
-
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
