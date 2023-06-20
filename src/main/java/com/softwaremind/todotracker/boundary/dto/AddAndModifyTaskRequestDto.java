@@ -10,7 +10,7 @@ public record AddAndModifyTaskRequestDto(
 
         @NotBlank(message = "Title cannot be empty")
         String title,
-        @NotBlank(message = "Details cannot be empty")
+        @Size(max = 1800, message = "Details should not exceed 1800 characters")
         String details,
         @NotNull
         TaskStatus status,

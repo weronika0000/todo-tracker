@@ -33,7 +33,7 @@ The following endpoints are available for managing tasks:
 * `PUT /api/tasks/{id}`: Update a specific task by ID.
 * `DELETE /api/tasks/{id}`: Delete a specific task by ID.
 * `GET /api/tasks/filtered`: Retrieve filtered tasks based on parameters.
-* `GET /actuator/metrics/http.server.requests`: Count the number of executed requests.
+
 
 
     Query Parameters:
@@ -46,6 +46,7 @@ The following endpoints are available for managing tasks:
 
 Please note that the /api/tasks/filtered endpoint allows you to retrieve tasks based on various filters and sorting options.
 
+* `GET /actuator/metrics/http.server.requests`: Count the number of executed requests.
 # Task format
 
 A task object has the following properties:

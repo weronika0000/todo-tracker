@@ -25,34 +25,29 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<AddTaskResponseDto> addTask(@RequestBody @Valid AddAndModifyTaskRequestDto taskDto) {
-        AddTaskResponseDto addedTask = taskService.addTask(taskDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addTask(taskDto));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskResponseDto> getTask(@PathVariable Long id) {
-        TaskResponseDto retrievedTask = taskService.getById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(retrievedTask);
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskResponseDto> getTask(@PathVariable Long taskId) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getById(taskId));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDto> modifyTask(@PathVariable Long id, @RequestBody @Valid AddAndModifyTaskRequestDto taskDto) {
-       TaskResponseDto modifiedTask = taskService.modifyTask(id, taskDto);
-        return ResponseEntity.status(HttpStatus.OK).body(modifiedTask);
+    @PutMapping("/{taskId}")
+    public ResponseEntity<TaskResponseDto> modifyTask(@PathVariable Long taskId, @RequestBody @Valid AddAndModifyTaskRequestDto taskDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.modifyTask(taskId, taskDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
         String body = "The task was deleted";
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    //
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
-        List<TaskResponseDto> allTasks = taskService.getAllTasks();
-        return ResponseEntity.status(HttpStatus.OK).body(allTasks);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
     }
 
 
@@ -63,8 +58,7 @@ public class TaskController {
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "sortDirection", required = false, defaultValue = "ASC") String sortDirection) {
 
-        List<TaskResponseDto> tasks = taskService.getFilteredTasks(status, importance, sortBy, sortDirection);
-        return ResponseEntity.status(HttpStatus.OK).body(tasks);
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getFilteredTasks(status, importance, sortBy, sortDirection));
 
     }
 }
