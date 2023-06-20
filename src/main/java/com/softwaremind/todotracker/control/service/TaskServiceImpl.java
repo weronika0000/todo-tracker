@@ -1,6 +1,7 @@
 package com.softwaremind.todotracker.control.service;
 
 import com.softwaremind.todotracker.boundary.dto.*;
+import com.softwaremind.todotracker.control.exceptions.TaskNotFoundException;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
 import com.softwaremind.todotracker.entity.Task;
 import com.softwaremind.todotracker.entity.TaskImportance;
@@ -35,7 +36,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository
                 .findById(taskId)
                 .orElseThrow(() ->
-                        new RuntimeException("The task does not exist"));
+                        new TaskNotFoundException("The task does not exist"));
 
         return mapTasktoTaskResponseDto(task);
     }
@@ -45,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = taskRepository.findAll();
 
         if (tasks.isEmpty()) {
-            throw new RuntimeException("No tasks found");
+            throw new TaskNotFoundException("No tasks found");
 
         }
         return mapTaskListToTaskResponseDtoList(tasks);
@@ -58,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
         Task taskFromDatabase = taskRepository
                 .findById(taskId)
                 .orElseThrow(() ->
-                        new RuntimeException("The task does not exist"));
+                        new TaskNotFoundException("The task does not exist"));
 
         taskFromDatabase.setTitle(taskDto.title());
         taskFromDatabase.setDetails(taskDto.details());
@@ -77,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
         Task taskFromDatabase = taskRepository
                 .findById(taskId)
                 .orElseThrow(() ->
-                        new RuntimeException("The task does not exist"));
+                        new TaskNotFoundException("The task does not exist"));
 
         taskRepository.deleteById(taskId);
 
@@ -95,21 +96,23 @@ public class TaskServiceImpl implements TaskService {
             sort = Sort.by(direction, "deadline");
         }
 
+        List<Task> filteredTasks;
         if (status != null && importance != null) {
-            return mapTaskListToTaskResponseDtoList(
-                    taskRepository.findAllByStatusAndImportance(status, importance, sort));
+            filteredTasks = taskRepository.findAllByStatusAndImportance(status, importance, sort);
         } else if (status != null) {
-            return mapTaskListToTaskResponseDtoList(
-                    taskRepository.findAllByStatus(status, sort));
+            filteredTasks = taskRepository.findAllByStatus(status, sort);
         } else if (importance != null) {
             sort = Sort.by(direction, "deadline");
-            return mapTaskListToTaskResponseDtoList(
-                    taskRepository.findAllByImportance(importance, sort));
+            filteredTasks = taskRepository.findAllByImportance(importance, sort);
         } else {
-            return mapTaskListToTaskResponseDtoList(
-                    taskRepository.findAll(sort));
+            filteredTasks = taskRepository.findAll(sort);
         }
 
+        if (filteredTasks.isEmpty()) {
+            throw new TaskNotFoundException("No tasks found");
+        }
+
+        return mapTaskListToTaskResponseDtoList(filteredTasks);
     }
 
 }
