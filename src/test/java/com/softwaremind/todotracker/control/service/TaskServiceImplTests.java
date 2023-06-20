@@ -72,23 +72,6 @@ public class TaskServiceImplTests {
         assertEquals(expectedResponseDto, responseDto);
     }
 
-/*    @Test
-    void testAddTask_WithInvalidRequest_ShouldThrowException() {
-        // Arrange
-        String title = null;
-        String details = "Sample Details";
-        TaskStatus status = TaskStatus.doing;
-        TaskImportance importance = TaskImportance.high;
-        LocalDate deadline = LocalDate.of(2023, 7, 25);
-
-        // Act
-        //
-        // & Assert
-       ;
-    }*/
-
-
-
     @Test
     void testModifyTask_WithValidRequest_ShouldReturnModifiedTask() {
         // Arrange
