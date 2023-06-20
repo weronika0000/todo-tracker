@@ -4,6 +4,7 @@ import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
 import lombok.Builder;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Builder
@@ -15,7 +16,11 @@ public record AddTaskResponseDto(
         String details,
         TaskStatus status,
         TaskImportance importance,
-        LocalDate deadline)
+        LocalDate deadline,
+
+        Instant createdAt
+
+)
 
 
 

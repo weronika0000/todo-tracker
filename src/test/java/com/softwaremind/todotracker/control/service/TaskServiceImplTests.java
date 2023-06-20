@@ -1,24 +1,18 @@
 package com.softwaremind.todotracker.control.service;
-import com.softwaremind.todotracker.boundary.dto.ModifyTaskRequestDto;
-import com.softwaremind.todotracker.boundary.dto.ModifyTaskResponseDto;
-import com.softwaremind.todotracker.boundary.dto.AddTaskRequestDto;
+import com.softwaremind.todotracker.boundary.dto.AddAndModifyTaskRequestDto;
 import com.softwaremind.todotracker.boundary.dto.AddTaskResponseDto;
+import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
 import com.softwaremind.todotracker.boundary.mapper.TaskMapper;
 import com.softwaremind.todotracker.control.repository.TaskRepository;
-import com.softwaremind.todotracker.control.service.TaskServiceImpl;
 import com.softwaremind.todotracker.entity.Task;
 import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,7 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 //@ExtendWith(MockitoExtension.class)
 //@ExtendWith(SpringExtension.class)
 public class TaskServiceImplTests {
@@ -48,7 +42,7 @@ public class TaskServiceImplTests {
     @Test
     public void testAddTask_WithValidRequest_ReturnsAddTaskResponseDto() {
         // Prepare
-        AddTaskRequestDto requestDto = new AddTaskRequestDto(
+        AddAndModifyTaskRequestDto requestDto = new AddAndModifyTaskRequestDto(
                 "Sample Title",
                 "Sample Details",
                 TaskStatus.DOING,
@@ -56,7 +50,7 @@ public class TaskServiceImplTests {
                 LocalDate.now().plusDays(7)
         );
 
-        Task task = TaskMapper.mapAddTaskRequestDtotoTask(requestDto);
+        Task task = TaskMapper.mapAddAndModifyTaskRequestDtotoTask(requestDto);
         task.setCreatedAt(Instant.now());
         Task savedTask = new Task();
         savedTask.setTaskId(1L);
@@ -99,11 +93,11 @@ public class TaskServiceImplTests {
     void testModifyTask_WithValidRequest_ShouldReturnModifiedTask() {
         // Arrange
         Long taskId = 1L; // Existing task ID
-        ModifyTaskRequestDto taskDto = new ModifyTaskRequestDto(
+        AddAndModifyTaskRequestDto taskDto = new AddAndModifyTaskRequestDto(
                 "Updated Title",
                 "Updated Details",
-                TaskStatus.done,
-                TaskImportance.low,
+                TaskStatus.DONE,
+                TaskImportance.LOW,
                 LocalDate.parse("2023-06-30")
         );
 
@@ -111,8 +105,8 @@ public class TaskServiceImplTests {
         existingTask.setTaskId(taskId);
         existingTask.setTitle("Original Title");
         existingTask.setDetails("Original Details");
-        existingTask.setStatus(TaskStatus.doing);
-        existingTask.setImportance(TaskImportance.high);
+        existingTask.setStatus(TaskStatus.DOING);
+        existingTask.setImportance(TaskImportance.HIGH);
         existingTask.setDeadline(LocalDate.parse("2023-06-24"));
 
         // Mock dependencies
@@ -120,7 +114,7 @@ public class TaskServiceImplTests {
         when(mockTaskRepository.save(existingTask)).thenReturn(existingTask);
 
         // Act
-        ModifyTaskResponseDto response = taskService.modifyTask(taskId, taskDto);
+        TaskResponseDto response = taskService.modifyTask(taskId, taskDto);
 
         // Assert
         assertNotNull(response);
@@ -136,11 +130,11 @@ public class TaskServiceImplTests {
     void testModifyTask_WithNonExistingTask_ShouldThrowException() {
         // Arrange
         Long taskId = 1L; // Non-existing task ID
-        ModifyTaskRequestDto taskDto = new ModifyTaskRequestDto(
+        AddAndModifyTaskRequestDto taskDto = new AddAndModifyTaskRequestDto(
                 "Updated Title",
                 "Updated Details",
-                TaskStatus.done,
-                TaskImportance.low,
+                TaskStatus.DONE,
+                TaskImportance.LOW,
                 LocalDate.parse("2023-06-30")
         );
 

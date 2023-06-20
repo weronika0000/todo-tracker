@@ -2,21 +2,24 @@ package com.softwaremind.todotracker.boundary.dto;
 
 import com.softwaremind.todotracker.entity.TaskImportance;
 import com.softwaremind.todotracker.entity.TaskStatus;
-import lombok.Builder;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-@Builder
-public record ModifyTaskResponseDto(
+public record AddAndModifyTaskRequestDto(
 
-        Long taskId,
+        @NotBlank(message = "Title cannot be empty")
         String title,
+        @NotBlank(message = "Details cannot be empty")
         String details,
+        @NotNull
         TaskStatus status,
+        @NotNull
         TaskImportance importance,
-        LocalDate deadline)
 
+        @NotNull
+        @FutureOrPresent
+        LocalDate deadline
 
-
- {
+) {
 }

@@ -1,8 +1,7 @@
 package com.softwaremind.todotracker.boundary.mapper;
 
-import com.softwaremind.todotracker.boundary.dto.AddTaskRequestDto;
+import com.softwaremind.todotracker.boundary.dto.AddAndModifyTaskRequestDto;
 import com.softwaremind.todotracker.boundary.dto.AddTaskResponseDto;
-import com.softwaremind.todotracker.boundary.dto.ModifyTaskResponseDto;
 import com.softwaremind.todotracker.boundary.dto.TaskResponseDto;
 import com.softwaremind.todotracker.entity.Task;
 
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class TaskMapper {
 
-    public static Task mapAddTaskRequestDtotoTask(AddTaskRequestDto taskDto){
+    public static Task mapAddAndModifyTaskRequestDtotoTask(AddAndModifyTaskRequestDto taskDto){
         return Task.builder()
                 .title(taskDto.title())
                 .details(taskDto.details())
@@ -30,6 +29,7 @@ public class TaskMapper {
                 .status(task.getStatus())
                 .importance(task.getImportance())
                 .deadline(task.getDeadline())
+                .createdAt(task.getCreatedAt())
                 .build();
 
     }
@@ -48,17 +48,7 @@ public class TaskMapper {
 
     }
 
-    public static ModifyTaskResponseDto mapTasktoModifyTaskResponseDto(Task task){
-        return ModifyTaskResponseDto.builder()
-                .taskId(task.getTaskId())
-                .title(task.getTitle())
-                .details(task.getDetails())
-                .status(task.getStatus())
-                .importance(task.getImportance())
-                .deadline(task.getDeadline())
-                .build();
 
-    }
 
     public static List<TaskResponseDto> mapTaskListToTaskResponseDtoList(List<Task> listOfTasks) {
         return listOfTasks.stream()

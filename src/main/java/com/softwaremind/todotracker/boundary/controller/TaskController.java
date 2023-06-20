@@ -24,7 +24,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<AddTaskResponseDto> addTask(@RequestBody @Valid AddTaskRequestDto taskDto) {
+    public ResponseEntity<AddTaskResponseDto> addTask(@RequestBody @Valid AddAndModifyTaskRequestDto taskDto) {
         AddTaskResponseDto addedTask = taskService.addTask(taskDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
     }
@@ -36,8 +36,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ModifyTaskResponseDto> modifyTask(@PathVariable Long id, @RequestBody @Valid ModifyTaskRequestDto taskDto) {
-        ModifyTaskResponseDto modifiedTask = taskService.modifyTask(id, taskDto);
+    public ResponseEntity<TaskResponseDto> modifyTask(@PathVariable Long id, @RequestBody @Valid AddAndModifyTaskRequestDto taskDto) {
+       TaskResponseDto modifiedTask = taskService.modifyTask(id, taskDto);
         return ResponseEntity.status(HttpStatus.OK).body(modifiedTask);
     }
 
@@ -49,13 +49,12 @@ public class TaskController {
     }
 
     //
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         List<TaskResponseDto> allTasks = taskService.getAllTasks();
         return ResponseEntity.status(HttpStatus.OK).body(allTasks);
     }
 
-    //                              filters
 
     @GetMapping("/filtered")
     public ResponseEntity<List<TaskResponseDto>> getFilteredTasks(

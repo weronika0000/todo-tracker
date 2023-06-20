@@ -23,8 +23,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public AddTaskResponseDto addTask(AddTaskRequestDto taskDto) {
-        Task receivedTask = mapAddTaskRequestDtotoTask(taskDto);
+    public AddTaskResponseDto addTask(AddAndModifyTaskRequestDto taskDto) {
+        Task receivedTask = mapAddAndModifyTaskRequestDtotoTask(taskDto);
         receivedTask.setCreatedAt(Instant.now());
         Task responseTask = taskRepository.save(receivedTask);
         return mapTasktoAddTaskResponseDto(responseTask);
@@ -53,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto) {
+    public TaskResponseDto modifyTask(Long taskId, AddAndModifyTaskRequestDto taskDto) {
 
         Task taskFromDatabase = taskRepository
                 .findById(taskId)
@@ -68,7 +68,7 @@ public class TaskServiceImpl implements TaskService {
         taskFromDatabase.setModifiedAt(Instant.now());
         Task responseTask = taskRepository.save(taskFromDatabase);
 
-        return mapTasktoModifyTaskResponseDto(responseTask);
+        return mapTasktoTaskResponseDto(responseTask);
     }
 
     @Override

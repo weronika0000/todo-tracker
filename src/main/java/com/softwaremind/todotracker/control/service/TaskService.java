@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface TaskService {
 
-    AddTaskResponseDto addTask(AddTaskRequestDto taskDto);
+    AddTaskResponseDto addTask(AddAndModifyTaskRequestDto taskDto);
 
     TaskResponseDto getById(Long taskId);
 
     List<TaskResponseDto> getAllTasks();
 
-    ModifyTaskResponseDto modifyTask(Long taskId, ModifyTaskRequestDto taskDto);
+    TaskResponseDto modifyTask(Long taskId, AddAndModifyTaskRequestDto taskDto);
 
     void deleteTask(Long taskId);
 
