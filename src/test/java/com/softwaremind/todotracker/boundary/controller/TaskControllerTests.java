@@ -22,13 +22,11 @@ import static org.mockito.Mockito.*;
 
 public class TaskControllerTests {
 
-
     @Mock
     private TaskServiceImpl taskService;
 
     @InjectMocks
     private TaskController taskController;
-
 
 
     @BeforeEach
@@ -78,8 +76,5 @@ public class TaskControllerTests {
         assertEquals(expectedResponse, response.getBody());
         verify(taskService, times(1)).modifyTask(taskId, taskDto);
     }
-
-
-
 
 }

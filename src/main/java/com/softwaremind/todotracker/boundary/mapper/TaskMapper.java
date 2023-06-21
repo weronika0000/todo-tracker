@@ -48,14 +48,10 @@ public class TaskMapper {
 
     }
 
-
-
     public static List<TaskResponseDto> mapTaskListToTaskResponseDtoList(List<Task> listOfTasks) {
         return listOfTasks.stream()
                 .map(TaskMapper::mapTasktoTaskResponseDto)
                 .collect(Collectors.toList());
     }
-
-
 
 }

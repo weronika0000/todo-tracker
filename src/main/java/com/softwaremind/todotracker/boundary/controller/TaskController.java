@@ -18,7 +18,6 @@ import static java.util.stream.Collectors.toMap;
 @RequestMapping("/api/tasks")
 public class TaskController {
     private TaskServiceImpl taskService;
-
     public TaskController(TaskServiceImpl taskService) {
         this.taskService = taskService;
     }
@@ -49,7 +48,6 @@ public class TaskController {
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getAllTasks());
     }
-
 
     @GetMapping("/filtered")
     public ResponseEntity<List<TaskResponseDto>> getFilteredTasks(

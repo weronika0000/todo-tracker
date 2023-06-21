@@ -13,7 +13,6 @@ import java.util.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();

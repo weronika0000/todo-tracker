@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name="Tasks")
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,13 +21,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long taskId;
-    //private Long userId;
     private String title;
     private String details;
     private TaskStatus status;
     private TaskImportance importance;
     private LocalDate deadline;
-
     private Instant createdAt;
     private Instant modifiedAt;
 

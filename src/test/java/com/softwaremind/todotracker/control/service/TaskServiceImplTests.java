@@ -10,9 +10,12 @@ import com.softwaremind.todotracker.entity.TaskStatus;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -22,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@ExtendWith(MockitoExtension.class)
-//@ExtendWith(SpringExtension.class)
 public class TaskServiceImplTests {
 
     @Mock
