@@ -1,5 +1,5 @@
 # Todo Tracker
-Todo Tracker is a task tracking application that allows you to manage and track your tasks based on their status and importance.
+Todo Tracker is an application that allows user to create, manage and track tasks based on their status and importance.
 
 # How to Run the Project
 
